@@ -4,7 +4,7 @@ date: 2019-01-18
 tags: [data wrangling, data science, messy data]
 categories: Data pre-processing
 header:
-  image: "/images/green.jpg"
+  image: "/images/code.png"
 excerpt: "Data Wrangling, Data Science, Messy Data"
 mathjax: "true"
 ---
