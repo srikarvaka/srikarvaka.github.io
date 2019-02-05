@@ -1,1 +1,3 @@
-[`Data Science Portfolio`][https://srikarvaka.github.io/]
+[Data Science Portfolio][link]
+
+[link]: https://srikarvaka.github.io/
