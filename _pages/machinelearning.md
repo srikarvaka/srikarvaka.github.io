@@ -1,10 +1,8 @@
 ---
-layout: posts
-permalink: /machine-learning/
 title: "ML projects"
-author_profile: true
+permalink: /machine-learning/
 header:
-  image: "/images/fog.jpg"
+  image: "/images/code.png"
 ---
 
 
