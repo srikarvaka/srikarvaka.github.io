@@ -75,7 +75,7 @@ cv.split(X=X,y=y, groups=groups)
 {% endhighlight %}
 
 
-![kfold](https://github.com/srikarvaka/srikarvaka.github.io/images/kfold.PNG)
+![kfold]({{ site.url }}{{ site.baseurl }}/images/kfold.PNG){: .align-center}
 
 
 Check text
