@@ -2,11 +2,12 @@
 title: "Cross-Validation: Why and how to do it"
 date: 2019-01-29
 tags: [data wrangling, data science, messy data]
-categories: Data pre-processing
+categories: Model-evaluation
 header:
   image: "/images/cvimage.jpeg"
-excerpt: "Data Wrangling, Data Science, Messy Data"
+excerpt: "Data Science, Model Selection"
 mathjax: "true"
+classes: wide
 ---
 
 One fine day you started working on this data set and you are planning to build a classification model(for the sake of discussion). You did data munging 
@@ -14,36 +15,32 @@ One fine day you started working on this data set and you are planning to build 
 two classes in your data, A and B, with 70 of total data belonging to class A and rest to B. When you divide the data into 80:20 ratio of train and test 
 data, random number of samples of class A and B will flow to train and test data(while maintaining the size ratio of train and test as 4:1). What if 65 of 
 data belonging to class A and 5 of class B goes to training set. Training set will be dominated with samples from class A (65) while test set will only 
-have (5). Since our tarining set has mojority of data labelled as class 'A', 93% to be precise, model tries to overfit. When the same model is applied 
-to testing data, which has 25 records labelled as 'B', they will be classified as 'A' resulting in horrible test score.
+have (5). Since our training set has majority of data labeled as class 'A', 93% to be precise, model tries to overfit. When the same model is applied 
+to testing data, which has 25 records labeled as 'B', they will be classified as 'A' resulting in horrible test score.
 
 TL;DR, you split the data wrong and now your model overfit the data. Root cause of this that we did not take distribution of labels into consideration 
-druing the split. Ideally we should same distribution of labels in test/validation set as the distribution in training set.  
+during the split. Ideally we should same distribution of labels in test/validation set as the distribution in training set.  
 
-### Importance of Validation set
+## Importance of Validation set
 
-The above mentioned scenario is just one such case where model performes well on training set and does badly on validation/testing set. Overfit or underfit 
-can also occur when we chose an imperfect model to fit data. An imperfect model is anything that is not supposed to work well on the kind of data we have, 
-although it can perfor well on other data sets. This happens because algorithems are built with some specific data format in mind, and is not supposed to 
-fit any kind of data equally well.  
+The above mentioned scenario is just one such case where model performs well on training set and does badly on validation/testing set. Overfit or underfit can also occur when we chose an imperfect model to fit data. An imperfect model is anything that is not supposed to work well on the kind of data we have, although it can perform well on other data sets. This happens because algorithms are built with some specific data format in mind, and is not supposed to fit any kind of data equally well.  
 
 All our efforts will go in drain after spending lots of time on data munging and model building only to realize that the model is near to useless. We need 
-to have some early indicator informing if the model is overfitting. This is where validation accuracy comes into picture and helps identify overfitting before 
-its too late. Low accuracy on validation set upon fitting the model on it is an indicator of overfitting and it's time we either for a different mode or 
-engineer the data again.
+to have some early indicator informing if the model is overfitting. This is where validation accuracy comes into picture and helps identify overfitting before its too late. Low accuracy on validation set upon fitting the model on it is an indicator of overfitting and it's time we either for a different mode or engineer the data again. We need a model that's good, not the 
+one that looks good.
 
-### Different ways to get CV data sets
+## Different ways to get CV data sets
 
 sklearn's [`modelselection`][modelsel] class has various subclasses which can do the data partitions very effectively. In case of supervised learning where the test 
 data is not provided, the data should be split into three sets for training, validation and testing purpose. If the test set already exists (provided), we only 
 need to create training and validation sets.
 
 In this article, I shall briefly discuss about some the commonly used Cross-Validation (CV) objects offered by sklearn and will explain their properties. 
-There are majorly three kinds of splits, Linear, shuffle and stratified split. 
+There are three major kinds of splits, Linear, shuffle and stratified split. 
 
-#### Linear split
+### Linear split
 
-* Data is split based on the ration passed as hyper-parameter 
+* Data is split based on the ratio passed as hyper-parameter 
 
 * Indexes of data points in subsamples follow same order as that in original data
 
@@ -51,8 +48,7 @@ There are majorly three kinds of splits, Linear, shuffle and stratified split.
 
 example : [`KFold split`][kfold]
 
-{% highlight python %}
-
+```python
 from sklearn.model_selection import KFold
 
 n_points = 100
@@ -72,13 +68,21 @@ groups = np.hstack([[ii] * 10 for ii in range(10)])
 cv = KFold(n_splits)
 cv.split(X=X,y=y, groups=groups)
 
-{% endhighlight %}
+```
 
 
-![kfold]({{ site.url }}{{ site.baseurl }}/images/kfold.PNG){: .align-center}
+
+<img src="{{ site.url }}{{ site.baseurl }}/images/cv_post/kfold.PNG" alt="K-fold split">
 
 
-Check text
+The obvious pitfall of this way of splitting is that it does not take into consideration the distribution of target variable across the data. This could lead to one or more classes not appearing in training set thus enabling model to overfit on labels appearing in training set.
+
+To overcome this we need have something that helps us to split the data according to the distribution of target variable 
+so that we have it evenly distributed in training and validation data
+
+### Shuffle split
+
+
 
 
 [pd-doc]: http://pandas.pydata.org/pandas-docs/stable/

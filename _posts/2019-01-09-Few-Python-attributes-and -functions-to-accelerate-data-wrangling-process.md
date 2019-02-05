@@ -1,6 +1,6 @@
 ---
 title: "Useful Python attributes and functions to accelerate data wrangling"
-date: 2019-01-18
+date: 2019-01-12
 tags: [data wrangling, data science, messy data]
 categories: Data pre-processing
 header:
@@ -22,7 +22,12 @@ We will divide this into three section based on where these functions are common
 2. Feature creation
 3. Selection of specific data
 
-*For the sake of discussion, we will be using dummy data and we shall call the dataframe as df. All the coding will be done using Python*
+
+
+<div class="notice">
+  <h4>Note</h4>
+  <p>For the sake of discussion, we will be using dummy data and we shall call the dataframe as df. All the coding will be done using Python</p>
+</div>
 
 ### Column transformation
 
