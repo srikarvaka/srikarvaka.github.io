@@ -2,7 +2,7 @@
 title: "About"
 permalink: /about/
 header:
-  image: "/images/singapore.jpg"
+  image: "/images/author.jpeg"
 ---
 
 An aspiring data scientist with expertise in below mentioned programming languages and frameworks. Currently working as a data migration developer in a reputed MNC.
