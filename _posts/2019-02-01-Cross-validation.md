@@ -10,16 +10,10 @@ mathjax: "true"
 classes: wide
 ---
 
-One fine day you started working on this data set and you are planning to build a classification model(for the sake of discussion). You did data munging 
-(cleaning, feature engineering, etc.) and you are now ready to split the data for training and testing. For the sake of simplicity, let us assume you have
-two classes in your data, A and B, with 70 of total data belonging to class A and rest to B. When you divide the data into 80:20 ratio of train and test 
-data, random number of samples of class A and B will flow to train and test data(while maintaining the size ratio of train and test as 4:1). What if 65 of 
-data belonging to class A and 5 of class B goes to training set. Training set will be dominated with samples from class A (65) while test set will only 
-have (5). Since our training set has majority of data labeled as class 'A', 93% to be precise, model tries to overfit. When the same model is applied 
-to testing data, which has 25 records labeled as 'B', they will be classified as 'A' resulting in horrible test score.
+One fine day you started working on this data set and you are planning to build a classification model(for the sake of discussion). You did data munging (cleaning, feature engineering, etc.) and you are now ready to split the data for training and testing. For the sake of simplicity, let us assume you have two classes in your data, A and B, with 70 of total data belonging to class A and rest to B. When you divide the data into 80:20 ratio of train and test 
+data, random number of samples of class A and B will flow to train and test data(while maintaining the size ratio of train and test as 4:1). What if 65 of data belonging to class A and 5 of class B goes to training set. Training set will be dominated with samples from class A (65) while test set will only have (5). Since our training set has majority of data labeled as class 'A', 93% to be precise, model tries to overfit. When the same model is applied to testing data, which has 25 records labeled as 'B', they will be classified as 'A' resulting in horrible test score.
 
-TL;DR, you split the data wrong and now your model overfit the data. Root cause of this that we did not take distribution of labels into consideration 
-during the split. Ideally we should same distribution of labels in test/validation set as the distribution in training set.  
+TL;DR, you split the data wrong and now your model overfit the data. Root cause of this that we did not take distribution of labels into consideration during the split. Ideally we should same distribution of labels in test/validation set as the distribution in training set.  
 
 ## Importance of Validation set
 
@@ -46,7 +40,7 @@ There are three major kinds of splits, Linear, shuffle and stratified split.
 
 * Doesn't take distribution of target labels into consideration during split
 
-example : [`KFold split`][kfold]
+Example : [`KFold split`][kfold]
 
 ```python
 from sklearn.model_selection import KFold
@@ -78,17 +72,27 @@ cv.split(X=X,y=y, groups=groups)
 The obvious pitfall of this way of splitting is that it does not take into consideration the distribution of target variable across the data. This could lead to one or more classes not appearing in training set thus enabling model to overfit on labels appearing in training set.
 
 To overcome this we need have something that helps us to split the data according to the distribution of target variable 
-so that we have it evenly distributed in training and validation data
+so that we have it evenly distributed in training and validation data. Stratified split gives us the provision of splitting 
+the data while preserving target variable distribution among the data sets.
 
-### Shuffle split
+### Stratified split
 
+As mentioned above, [`stratified split`][skf](stratifiedKFold split to be precise) splits the data by keeping distribution of target variable into consideration. 
 
+```python
+# Create cross-validation object
+cv = StratifiedKFold(n_splits)
+cv.split(X=X,y=y, groups=groups)
+
+```
+
+<img src="{{ site.url }}{{ site.baseurl }}/images/cv_post/startkfold.PNG" alt="StratifiedK-fold split">
 
 
 [pd-doc]: http://pandas.pydata.org/pandas-docs/stable/
 [modelsel]: https://scikit-learn.org/stable/modules/classes.html#module-sklearn.model_selection
 [kfold]: https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.KFold.html#sklearn.model_selection.KFold
-[4]: https://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.map.html
+[skf]: https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.StratifiedKFold.html#sklearn.model_selection.StratifiedKFold
 [5]: https://pandas.pydata.org/pandas-docs/version/0.23.4/generated/pandas.cut.html
 [6]: https://pandas.pydata.org/pandas-docs/version/0.23.4/generated/pandas.qcut.html
 [7]: https://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.loc.html
