@@ -12,7 +12,7 @@ locale                   : "en-US"
 title                    : "Data Science Portfolio"
 title_separator          : "-"
 name                     : "Srikar Reddy Vaka"
-description              : "Data Science Journey"
+description              : "description"
 url                      : # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
 repository               : # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
@@ -88,7 +88,7 @@ author:
   avatar           : "/images/profile.jpg" # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
   bio              : "Data Science Portfolio"
   location         : "Hyderabad, IND"
-  email            :
+  email            :  vakasrikar@gmail.com
   uri              :
   home             : # null (default), "absolute or relative url to link to author home"
   bitbucket        :
@@ -250,7 +250,7 @@ defaults:
       layout: single
       author_profile: true
       read_time: true
-      comments: # true
+      comments:  true
       share: true
       related: true
   # _pages

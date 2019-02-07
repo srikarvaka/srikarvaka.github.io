@@ -1,7 +1,7 @@
 ---
 title: "Cross-Validation: Why and how to do it"
 date: 2019-01-29
-tags: [data wrangling, data science, messy data]
+tags: [Model Selection, Data Science, overfitting]
 categories: Model-evaluation
 header:
   image: "/images/cvimage.jpeg"
@@ -20,8 +20,7 @@ TL;DR, you split the data wrong and now your model overfit the data. Root cause 
 The above mentioned scenario is just one such case where model performs well on training set and does badly on validation/testing set. Overfit or underfit can also occur when we chose an imperfect model to fit data. An imperfect model is anything that is not supposed to work well on the kind of data we have, although it can perform well on other data sets. This happens because algorithms are built with some specific data format in mind, and is not supposed to fit any kind of data equally well.  
 
 All our efforts will go in drain after spending lots of time on data munging and model building only to realize that the model is near to useless. We need 
-to have some early indicator informing if the model is overfitting. This is where validation accuracy comes into picture and helps identify overfitting before its too late. Low accuracy on validation set upon fitting the model on it is an indicator of overfitting and it's time we either for a different mode or engineer the data again. We need a model that's good, not the 
-one that looks good.
+to have some early indicator informing if the model is overfitting. This is where validation accuracy comes into picture and helps identify overfitting before its too late. Low accuracy on validation set upon fitting the model on it is an indicator of overfitting and it's time we either for a different mode or engineer the data again. We need a model that's good, not the one that looks good.
 
 ## Different ways to get CV data sets
 
@@ -30,14 +29,12 @@ data is not provided, the data should be split into three sets for training, val
 need to create training and validation sets.
 
 In this article, I shall briefly discuss about some the commonly used Cross-Validation (CV) objects offered by sklearn and will explain their properties. 
-There are three major kinds of splits, Linear, shuffle and stratified split. 
+There are three major kinds of splits, Linear, stratified and shuffle split. 
 
 ### Linear split
 
 * Data is split based on the ratio passed as hyper-parameter 
-
 * Indexes of data points in subsamples follow same order as that in original data
-
 * Doesn't take distribution of target labels into consideration during split
 
 Example : [`KFold split`][kfold]
@@ -69,32 +66,63 @@ cv.split(X=X,y=y, groups=groups)
 <img src="{{ site.url }}{{ site.baseurl }}/images/cv_post/kfold.PNG" alt="K-fold split">
 
 
-The obvious pitfall of this way of splitting is that it does not take into consideration the distribution of target variable across the data. This could lead to one or more classes not appearing in training set thus enabling model to overfit on labels appearing in training set.
+The obvious pitfall of this way of splitting is that it does not take into consideration the population of various target classes in the data. This could lead to one or more classes not appearing in training set thus enabling model to overfit on labels appearing in training set.
 
-To overcome this we need have something that helps us to split the data according to the distribution of target variable 
-so that we have it evenly distributed in training and validation data. Stratified split gives us the provision of splitting 
-the data while preserving target variable distribution among the data sets.
+To overcome this we need have something that helps us to split the data according to the percentage of classes 
+so that we have it evenly distributed in training and validation data. Stratified split helps us to achieve that.
 
 ### Stratified split
 
 As mentioned above, [`stratified split`][skf](stratifiedKFold split to be precise) splits the data by keeping distribution of target variable into consideration. 
 
+* Enhanced K-fold split where split is done while preserving the percentage of samples for each class
+
 ```python
 # Create cross-validation object
-cv = StratifiedKFold(n_splits)
-cv.split(X=X,y=y, groups=groups)
+cv_strat_split = StratifiedKFold(n_splits)
+cv_strat_split.split(X=X,y=y, groups=groups)
 
 ```
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/cv_post/startkfold.PNG" alt="StratifiedK-fold split">
 
 
+There is still the  issue of splitting data linearly. It would be better if we can somehow split the data while preserving 
+the population of classes in training and validation sets.
+
+### Shuffle split
+
+* [`Shuffle split`][shspl] splits the by randomly picking indexes from pool of available data (not in order)
+* [`Stratified shuffle split`][sssplit] shuffles the data like above while preserving the percentage of classes 
+in the distributed data
+* Stratified shuffle split is particularly helpful if there is large disparity between the population of classes in
+ the dataset
+
+ ```python
+
+#Shuffle split
+cv_shuff_split = ShuffleSplit(n_splits, test_size=.25, random_state=0)
+cv_shuff_split.split(X=x)
+
+#Stratified shuffle split
+cv_start_shuff = StratifiedShuffleSplit(n_splits, test_size=0.25, random_state=0)
+cv_start_shuff.split(X=x)
+
+ ```
+
+<figure class="half">
+    <a href="{{ site.url }}{{ site.baseurl }}/images/cv_post/shuffsplit.PNG"><img src="{{ site.url }}{{ site.baseurl }}/images/cv_post/shuffsplit.PNG"></a>
+    <a href="{{ site.url }}{{ site.baseurl }}/images/cv_post/stratsuff.PNG"><img src="{{ site.url }}{{ site.baseurl }}/images/cv_post/stratsuff.PNG"></a>
+    <figcaption>Shuffle split (vs) StratifiedShuffle split </figcaption>
+</figure>
+
+
+
 [pd-doc]: http://pandas.pydata.org/pandas-docs/stable/
 [modelsel]: https://scikit-learn.org/stable/modules/classes.html#module-sklearn.model_selection
 [kfold]: https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.KFold.html#sklearn.model_selection.KFold
 [skf]: https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.StratifiedKFold.html#sklearn.model_selection.StratifiedKFold
-[5]: https://pandas.pydata.org/pandas-docs/version/0.23.4/generated/pandas.cut.html
-[6]: https://pandas.pydata.org/pandas-docs/version/0.23.4/generated/pandas.qcut.html
-[7]: https://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.loc.html
-[8]: https://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.iloc.html
+[shspl]: https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.ShuffleSplit.html#sklearn.model_selection.ShuffleSplit
+[sssplit]: https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.StratifiedShuffleSplit.html#sklearn.model_selection.StratifiedShuffleSplit
+
 
