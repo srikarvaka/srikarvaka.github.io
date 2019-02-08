@@ -111,8 +111,8 @@ cv_start_shuff.split(X=x)
  ```
 
 <figure class="half">
-    <a href="{{ site.url }}{{ site.baseurl }}/images/cv_post/shuffsplit.PNG"><img src="{{ site.url }}{{ site.baseurl }}/images/cv_post/shuffsplit.PNG"></a>
-    <a href="{{ site.url }}{{ site.baseurl }}/images/cv_post/stratsuff.PNG"><img src="{{ site.url }}{{ site.baseurl }}/images/cv_post/stratsuff.PNG"></a>
+    <a href="{{ site.url }}{{ site.baseurl }}/images/cv_post/shuffsplit.png"><img src="{{ site.url }}{{ site.baseurl }}/images/cv_post/shuffsplit.png"></a>
+    <a href="{{ site.url }}{{ site.baseurl }}/images/cv_post/stratsuff.png"><img src="{{ site.url }}{{ site.baseurl }}/images/cv_post/stratsuff.png"></a>
     <figcaption>Shuffle split (vs) StratifiedShuffle split </figcaption>
 </figure>
 
