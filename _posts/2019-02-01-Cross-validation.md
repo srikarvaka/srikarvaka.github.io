@@ -1,10 +1,11 @@
 ---
 title: "Cross-Validation: Why and how to do it"
 date: 2019-01-29
-tags: [Model Selection, Data Science, overfitting]
+tags: [Model Selection, Data Science]
 categories: Model-evaluation
 header:
-  image: "/images/cvimage.jpeg"
+  overlay_image: "/images/cvimage.jpeg"
+  overlay_filter: 0.5
 excerpt: "Data Science, Model Selection"
 mathjax: "true"
 classes: wide
@@ -13,14 +14,14 @@ classes: wide
 One fine day you started working on this data set and you are planning to build a classification model(for the sake of discussion). You did data munging (cleaning, feature engineering, etc.) and you are now ready to split the data for training and testing. For the sake of simplicity, let us assume you have two classes in your data, A and B, with 70 of total data belonging to class A and rest to B. When you divide the data into 80:20 ratio of train and test 
 data, random number of samples of class A and B will flow to train and test data(while maintaining the size ratio of train and test as 4:1). What if 65 of data belonging to class A and 5 of class B goes to training set. Training set will be dominated with samples from class A (65) while test set will only have (5). Since our training set has majority of data labeled as class 'A', 93% to be precise, model tries to overfit. When the same model is applied to testing data, which has 25 records labeled as 'B', they will be classified as 'A' resulting in horrible test score.
 
-TL;DR, you split the data wrong and now your model overfit the data. Root cause of this that we did not take distribution of labels into consideration during the split. Ideally we should same distribution of labels in test/validation set as the distribution in training set.  
+TL;DR, you split the data wrong and now your model overfit the data. Root cause of this is that we did not take percentages of labels into consideration during the split. Ideally we should same distribution of labels in test/validation set as the distribution in training set.  
 
 ## Importance of Validation set
 
-The above mentioned scenario is just one such case where model performs well on training set and does badly on validation/testing set. Overfit or underfit can also occur when we chose an imperfect model to fit data. An imperfect model is anything that is not supposed to work well on the kind of data we have, although it can perform well on other data sets. This happens because algorithms are built with some specific data format in mind, and is not supposed to fit any kind of data equally well.  
+The above mentioned scenario is just one such case where model performs well on training set and does badly on validation/testing set. Overfit or underfit can also occur when we chose an imperfect model to fit data. An imperfect model is something that is designed to work well on the kind of data we have, although it can perform well on other data sets. This happens because algorithms are built based on few assumptions on data formats, and is not supposed to fit any kind of data equally well.  
 
-All our efforts will go in drain after spending lots of time on data munging and model building only to realize that the model is near to useless. We need 
-to have some early indicator informing if the model is overfitting. This is where validation accuracy comes into picture and helps identify overfitting before its too late. Low accuracy on validation set upon fitting the model on it is an indicator of overfitting and it's time we either for a different mode or engineer the data again. We need a model that's good, not the one that looks good.
+All our efforts will go in drain after spending lots of time on data cleaning, transformations and model building only to realize that the model is near to useless. We need 
+to have some early indicator informing if the model is overfitting. This is where validation accuracy comes into picture and help us identify overfitting before its too late. Low accuracy on validation set upon fitting the model on it is an indicator of high variance in the model and it's time we either go for a different mode or re-engineer the data. We need a model that's good, not the one that looks good.
 
 ## Different ways to get CV data sets
 

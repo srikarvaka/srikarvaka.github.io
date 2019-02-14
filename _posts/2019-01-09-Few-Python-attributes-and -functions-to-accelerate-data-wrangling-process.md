@@ -4,7 +4,8 @@ date: 2019-01-12
 tags: [data wrangling, data science, messy data]
 categories: Data pre-processing
 header:
-  image: "/images/code.png"
+  overlay_image: "/images/code.png"
+  overlay_filter: 0.5
 excerpt: "Data Wrangling, Data Science, Messy Data"
 mathjax: "true"
 ---
