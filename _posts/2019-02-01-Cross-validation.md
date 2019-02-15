@@ -3,7 +3,7 @@ title: "Cross-Validation: Why and how to do it"
 date: 2019-01-29
 tags: [Model Selection, Data Science]
 categories: Model-evaluation
-comments: false
+comments: true
 header:
   overlay_image: "/images/cvimage.jpeg"
   overlay_filter: 0.5
