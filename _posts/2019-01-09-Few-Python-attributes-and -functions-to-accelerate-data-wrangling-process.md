@@ -3,6 +3,7 @@ title: "Useful Python attributes and functions to accelerate data wrangling"
 date: 2019-01-12
 tags: [data wrangling, data science, messy data]
 categories: Data pre-processing
+comments: true
 header:
   overlay_image: "/images/code.png"
   overlay_filter: 0.5
