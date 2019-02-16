@@ -40,7 +40,7 @@ of the source data is wrong and there is a need to change the dtype. Another use
 the 'x' values with 'y'. In place filling null or missing values on a column can be done using [`fillna(val)`][3] function fills all the missing values with the 
 function argument.
 
-{% highlight python %}
+```python
 #=> 'col' is any column which will be converted to type int
 
 #Cast the column type to int (or any other type)
@@ -53,7 +53,7 @@ df['col'] = df['col'].replace(x,y)
 #fill missing values
 df['col'] = df['col'].fillna(val)
 
-{% endhighlight %}
+```
 
 
 ### Feature creation
@@ -71,7 +71,7 @@ or a data analyst should know.
 Other useful functions are [`pd.cut()`][5] and [`pd.qcut()`][6] which bins the columns based on number bins or quintiles. They are very handy when we want to bin 
 the column values based on requirement or their distribution. Some of the common examples are binning of ages, Salaries, ticket price etc. 
 
-{% highlight python %}
+```python
 #=> 'col' is any column which will be converted to type int
 
 """
@@ -90,14 +90,14 @@ df['col'] = df['col'].apply(fn)
 df['col2'] = pd.cut(df['col1'], bins, labels=None)
 df['col2'] = pd.qcut(df['col1'], q, labels=None)
 
-{% endhighlight %}
+```
 
 ### Selection of specific data
 
 We may sometimes need to select a subset of data based on a condition to either modify or to do a basic data analysis. Pandas has [`df.loc[]`][7] and [`df.iloc[]`][8] 
 which takes labels and indexes as input respectively and access elements that match the given input.
 
-{% highlight python %}
+```python
 
 #Returns a series of booleans for index that matches given condition
 #example
@@ -115,7 +115,7 @@ df.loc[row, col]
 #similar to above but rows are matched picked based not index. Obviously only expects integers for row indexes
 df.iloc[row, col] 
 
-{% endhighlight %}
+```
 
 ## Conclusion
 
