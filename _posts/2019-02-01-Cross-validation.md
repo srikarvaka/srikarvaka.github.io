@@ -7,22 +7,26 @@ comments: true
 header:
   overlay_image: "/images/cvimage.jpeg"
   overlay_filter: 0.5
-excerpt: "Data Science, Model Selection"
+excerpt: "Explaining various resampling techniques and the importance of cross-Validation for predictive modeling"
 mathjax: "true"
 classes: wide
 ---
 
-One fine day you started working on this data set and you are planning to build a classification model(for the sake of discussion). You did data munging (cleaning, feature engineering, etc.) and you are now ready to split the data for training and testing. For the sake of simplicity, let us assume you have two classes in your data, A and B, with 70 of total data belonging to class A and rest to B. When you divide the data into 80:20 ratio of train and test 
-data, random number of samples of class A and B will flow to train and test data(while maintaining the size ratio of train and test as 4:1). What if 65 of data belonging to class A and 5 of class B goes to training set. Training set will be dominated with samples from class A (65) while test set will only have (5). Since our training set has majority of data labeled as class 'A', 93% to be precise, model tries to overfit. When the same model is applied to testing data, which has 25 records labeled as 'B', they will be classified as 'A' resulting in horrible test score.
+Say you started working on this data set and you are planning to build a classification model(for the sake of discussion). You did data munging (cleaning, feature engineering, etc.) and you are now ready to split the data for training and testing. For the sake of simplicity, let us assume you have two classes in your data, A and B, with 70 of total data belonging to class A and rest to B. When you divide the data into $$80:20$$ ratio of train and test 
+data, random number of samples of class A and B will flow to train and test data(while maintaining the size ratio of train and test as 4:1). What if 65 of data belonging to class A and 5 of class B goes to training set. Training set will be dominated with samples from class A (65) while test set will only have (5). Since our training set has majority of data labeled as class 'A', 93% to be precise, model tries to overfit resulting in high variance. When the same model is applied to testing data, which has 25 records labeled as 'B', they will be classified as 'A' resulting in horrible test score. This is because that training and testing data are not homogeneous. 
 
-TL;DR, you split the data wrong and now your model overfit the data. Root cause of this is that we did not take percentages of labels into consideration during the split. Ideally we should same distribution of labels in test/validation set as the distribution in training set.  
+TL;DR, you split the data wrong and now your model is performing poorly because of high variance. Root cause of this is that we did not take percentages of labels into consideration during the split. Ideally we should same distribution of labels in test/validation set as the distribution in training set.  
 
 ## Importance of Validation set
 
-The above mentioned scenario is just one such case where model performs well on training set and does badly on validation/testing set. Overfit or underfit can also occur when we chose an imperfect model to fit data. An imperfect model is something that is designed to work well on the kind of data we have, although it can perform well on other data sets. This happens because algorithms are built based on few assumptions on data formats, and is not supposed to fit any kind of data equally well.  
+The above mentioned scenario is just one such case where model performs well on training set and does badly on validation/testing set. Overfit or underfit can also occur when we chose an imperfect model to fit data. An imperfect model is something that is designed to work well on the kind of data (like decision trees on categorial features) we have, although it can perform well on other data sets. This happens because algorithms are built based on few assumptions on data formats and are not supposed to fit other kinds of data equally well.  
 
-All our efforts will go in drain after spending lots of time on data cleaning, transformations and model building only to realize that the model is near to useless. We need 
-to have some early indicator informing if the model is overfitting. This is where validation accuracy comes into picture and help us identify overfitting before its too late. Low accuracy on validation set upon fitting the model on it is an indicator of high variance in the model and it's time we either go for a different mode or re-engineer the data. We need a model that's good, not the one that looks good.
+We need to have some early indicator informing if the model is overfitting. This is where validation accuracy comes into picture and help us identify high variance before its too late. Low accuracy on validation set upon fitting the model on it is an indicator of high variance in the model and it's time we either go for a different mode or re-engineer the data. We need a model that's good, not the one that looks good.
+
+### Single vs Multiple validation sets
+
+It has been shown by several researchers that validation using single test can be a poor choice. Resampling methods, such as cross-validation, can be used to produce appropriate estimates of model performance using the
+training set. Resampling methods often produce performance estimates superior to a single test set because they evaluate many alternate versions of data.
 
 ## Different ways to get CV data sets
 
@@ -30,16 +34,18 @@ sklearn's [`modelselection`][modelsel] class has various subclasses which can do
 data is not provided, the data should be split into three sets for training, validation and testing purpose. If the test set already exists (provided), we only 
 need to create training and validation sets.
 
-In this article, I shall briefly discuss about some the commonly used Cross-Validation (CV) objects offered by sklearn and will explain their properties. 
-There are three major kinds of splits, Linear, stratified and shuffle split. 
+In this article, I shall briefly discuss about some the commonly used resampling techniques offered by sklearn and will explain their pros and cons. 
+There are three major kinds of splits, K-Fold, stratified and shuffle split. 
 
-### Linear split
+### K-fold Cross-Validation
 
-* Data is split based on the ratio passed as hyper-parameter 
+* The samples are randomly partitioned into k sets of roughly equal size
 * Indexes of data points in subsamples follow same order as that in original data
-* Doesn't take distribution of target labels into consideration during split
-
-Example : [`KFold split`][kfold]
+* The k resampled estimates of performance are summarized (usually with the mean and
+standard error) and used to understand the relationship between the tuning
+parameter(s) and model utility
+* The choice of k is usually 5 or 10, but there is no formal rule
+* Does not take percentage of data in the classes into consideration during split
 
 ```python
 from sklearn.model_selection import KFold
@@ -70,7 +76,7 @@ cv.split(X=X,y=y, groups=groups)
 
 The obvious pitfall of this way of splitting is that it does not take into consideration the population of various target classes in the data. This could lead to one or more classes not appearing in training set thus enabling model to overfit on labels appearing in training set.
 
-To overcome this we need have something that helps us to split the data according to the percentage of classes 
+To overcome this we need have a resampling technique that helps us to split the data according to the percentage of classes 
 so that we have it evenly distributed in training and validation data. Stratified split helps us to achieve that.
 
 ### Stratified split

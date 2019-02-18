@@ -9,7 +9,7 @@ minimal_mistakes_skin    : "air" # "air", "aqua", "contrast", "dark", "dirt", "n
 
 # Site Settings
 locale                   : "en-US"
-title                    : "Data Science Portfolio"
+title                    : "DS ~ ML Blog"
 title_separator          : "-"
 name                     : "Srikar Reddy Vaka"
 description              : "description"
@@ -87,7 +87,7 @@ analytics:
 author:
   name             : "Srikar Reddy Vaka"
   avatar           : "/images/profile.jpg" # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : "Data Science Portfolio"
+  bio              : "Data Science enthusiast who likes believes in Python over R (bite me!)"
   location         : "Hyderabad, IND"
   email            :  vakasrikar@gmail.com
   uri              :
