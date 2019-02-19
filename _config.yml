@@ -87,7 +87,7 @@ analytics:
 author:
   name             : "Srikar Reddy Vaka"
   avatar           : "/images/profile.jpg" # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : "Data Science enthusiast who likes believes in Python over R (bite me!)"
+  bio              : "Data Science enthusiast who believes in Python over R (bite me!)"
   location         : "Hyderabad, IND"
   email            :  vakasrikar@gmail.com
   uri              :
