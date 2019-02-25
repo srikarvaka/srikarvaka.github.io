@@ -1,5 +1,5 @@
 ---
-title: "ML projects"
+title: "Tags"
 permalink: /machine-learning/
 header:
   overlay_image: "/images/code.png"

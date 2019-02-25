@@ -1,13 +1,13 @@
 ---
-title: "Useful Python attributes and functions to accelerate data wrangling"
+title: "Basic guide into data wrangling"
 date: 2019-01-12
-tags: [data wrangling, data science, messy data]
+tags: [Data wrangling, Data Science, messy data]
 categories: Data pre-processing
 comments: true
 header:
   overlay_image: "/images/code.png"
   overlay_filter: 0.5
-excerpt: "Data Wrangling, Data Science, Messy Data"
+excerpt: "Useful Python attributes and functions to accelerate data wrangling"
 mathjax: "true"
 ---
 
